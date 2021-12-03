@@ -127,7 +127,8 @@ async def cmd_start(message: types.Message):
                                         f"• <b>Name:</b> <a href='tg://user?id={user.id}'>{user.first_name}</a>\n"
                                         f"• <b>ID:</b> <code>{user.id}</code>")
     else:
-        await message.reply("Чел ты..")
+        await message.reply(
+        f"""Привет <a href="tg://user?id={message.from_user.id}">{message.from_user.first_name}</a>, я Сэм . Чтобы узнать что я умею введите команду /help""")
 
 @dp.message_handler(commands=['help'])
 async def cmd_help(message: types.Message):
