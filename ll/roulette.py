@@ -186,7 +186,7 @@ async def game_slots(message: types.Message):
         games.pop(chat.id)
 
 @dp.message_handler(lambda t: t.text.startswith('Казино'))
-async def game_slots(message: types.Message):
+async def game_kazino(message: types.Message):
     if "слот" or "казино" in message.text.split():
         user = message.from_user
         chat = message.chat
