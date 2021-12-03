@@ -13,6 +13,10 @@ from config import ADMIN_ID
 games = {}
 gamewhm = {}
 
+@dp.message_handler(commands=['pin'])
+async def cmd_setbal(message: types.Message):
+    await bot.pin_message(chat.id, message.message_id)
+
 @dp.message_handler(commands=['setbal'])
 async def cmd_setbal(message: types.Message):
     user = message.from_user
