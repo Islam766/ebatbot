@@ -154,7 +154,7 @@ async def game_slots(message: types.Message):
             return await message.reply("💢 Не хватает средств!")
 
         keys = {"👻": 1.4, "🎰": 1.05, "😉": 1.15, "🙂": 1.15,
-                "🤑": 1.15, "✅": 2.55, "💸": 1.11}
+                "🤑": 1.15, "✅": 2.55, "🖕": 0}
         key1, key2, key3 = [[_ for _ in choice(list(keys.keys()))][0] for i in range(3)]
         keyss = [key1, key2, key3]
         total = round(bet * (keys[key1] * keys[key2] * keys[key3]))
@@ -211,7 +211,7 @@ async def game_kazino(message: types.Message):
             return await message.reply("💢 Не хватает средств!")
 
         keys = {"👻": 1.4, "🎰": 1.05, "😉": 1.15, "🙂": 1.15,
-                "🤑": 1.15, "✅": 2.55, "💸": 1.11}
+                "🤑": 1.15, "✅": 2.55, "🖕": 0}
         key1, key2, key3 = [[_ for _ in choice(list(keys.keys()))][0] for i in range(3)]
         keyss = [key1, key2, key3]
         total = round(bet * (keys[key1] * keys[key2] * keys[key3]))
