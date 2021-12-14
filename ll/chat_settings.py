@@ -30,6 +30,14 @@ async def cmd_delwelcome(message: types.Message):
     else:
         await message.reply(f"🚫 <b>Вы не администратор.</b>")
 
+@dp.message_handler(commands=['del'])
+async def cmd_del(message: types.Message):
+    if 1912408598:
+        await bot.delete_message(message.chat.id, message.reply_to_message.from_user.id)
+        await message.reply(f"Удалено!")
+    else:
+        await message.reply(f"🚫 <b>Вы не администратор.</b>")
+
 @dp.message_handler(commands=['settings'])
 async def cmd_settings(message: types.Message):
     chat = message.chat

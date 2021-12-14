@@ -13,10 +13,6 @@ from config import ADMIN_ID
 games = {}
 gamewhm = {}
 
-@dp.message_handler(commands=['pin'])
-async def cmd_setbal(message: types.Message):
-    await bot.pin_message(chat.id, message.message_id)
-
 @dp.message_handler(commands=['setbal'])
 async def cmd_setbal(message: types.Message):
     user = message.from_user
@@ -121,7 +117,12 @@ async def cmd_top(message: types.Message):
     top8 = tops[-8][0]
     top9 = tops[-9][0]
     top10 = tops[-10][0]
-    allt = [top1, top2, top3, top4, top5, top6, top7, top8, top9, top10]
+    top11 = tops[-11][0]
+    top12 = tops[-12][0]
+    top13 = tops[-13][0]
+    top14 = tops[-14][0]
+    top15 = tops[-15][0]
+    allt = [top1, top2, top3, top4, top5, top6, top7, top8, top9, top10, top11, top12, top13, top14, top15]
     alltops = ""
     num = 0
     for x in allt:
@@ -130,7 +131,35 @@ async def cmd_top(message: types.Message):
         fname = quote_html(user.full_name)
         num += 1
         alltops += f"{num} • {fname} - <b><i>{x}</i></b> монеток.\n"
-    await message.reply(f"Топ 10 богачей бота.\n\n{alltops}")
+    await message.reply(f"Топ 15 богачей бота.\n\n{alltops}")
+
+#бас
+@dp.message_handler(lambda t: t.text.startswith('бас'))
+async def game_slots(message: types.Message):
+  if "бас" or "бас" in message.text.split():
+      user = message.from_user
+      chat = message.chat
+      data = await get_rang(message)
+      if data is None:
+          return await message.reply(f"🚫 <b>Не найден в базе данных.</b>\n\n"
+                                     f"/start в лс у бота!")
+      try:
+          args = message.text.lower().split("бас ", 1)[1]
+          bet = int(args)
+          if bet < 0 or len(message.text.lower().split("бас ")) == 1:
+              raise ValueError
+      except (ValueError, IndexError):
+          return await message.reply("Укажи ставку!")
+
+      return_get_balance = await get_balance(message)
+      if int(return_get_balance) < int(bet):
+          return await message.reply("💢 Не хватает средств!")
+      try:
+            await bot.send_message(user_send, userpost_text)
+            confirm.append(user_send)
+         except:
+            decline.append(user_send)
+      await message.answer(f'📣 Рассылка юзерпоста завершена!\n\n✅ Успешно: {len(confirm)}\n❌ Неуспешно: {len(decline)}')
 
 @dp.message_handler(lambda t: t.text.startswith('казино'))
 async def game_slots(message: types.Message):
@@ -154,7 +183,7 @@ async def game_slots(message: types.Message):
             return await message.reply("💢 Не хватает средств!")
 
         keys = {"👻": 1.4, "🎰": 1.05, "😉": 1.15, "🙂": 1.15,
-                "🤑": 1.15, "✅": 2.55, "🖕": 0}
+                "🤑": 1.15, "🤌": 0, "🖕": 0}
         key1, key2, key3 = [[_ for _ in choice(list(keys.keys()))][0] for i in range(3)]
         keyss = [key1, key2, key3]
         total = round(bet * (keys[key1] * keys[key2] * keys[key3]))
@@ -190,7 +219,7 @@ async def game_slots(message: types.Message):
         games.pop(chat.id)
 
 @dp.message_handler(lambda t: t.text.startswith('Казино'))
-async def game_kazino(message: types.Message):
+async def game_slots(message: types.Message):
     if "слот" or "казино" in message.text.split():
         user = message.from_user
         chat = message.chat
@@ -211,7 +240,7 @@ async def game_kazino(message: types.Message):
             return await message.reply("💢 Не хватает средств!")
 
         keys = {"👻": 1.4, "🎰": 1.05, "😉": 1.15, "🙂": 1.15,
-                "🤑": 1.15, "✅": 2.55, "🖕": 0}
+                "🤑": 1.15, "🤌": 0, "🖕": 0}
         key1, key2, key3 = [[_ for _ in choice(list(keys.keys()))][0] for i in range(3)]
         keyss = [key1, key2, key3]
         total = round(bet * (keys[key1] * keys[key2] * keys[key3]))
@@ -335,8 +364,9 @@ async def game_slots(message: types.Message):
         games.setdefault(chat.id)
         if games[chat.id]:
             try:
-                return await bot.delete_message(chat.id, message.message_id)
-            except: return await message.reply("У бота нет админки :(")
+                return await bot.pin_message(chat.id, message.message_id)
+            except:
+                return await message.reply("У бота нет админки :(")
 
         ok = int(return_get_balance) - int(bet)
         cursor.execute(f'UPDATE users SET balance=? WHERE user_id=?', (ok, user.id,))
